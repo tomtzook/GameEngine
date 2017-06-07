@@ -76,8 +76,10 @@ public class GameObject {
 			child.updateAll(delta);
 	}
 	public void updatePhysicsAll(PhysicsEngine engine, float delta){
-		if(physicsObject != null)
+		if(physicsObject != null){
 			physicsObject.update(engine, delta);
+			engine.updateObject(this, delta);
+		}
 		
 		for(GameObject child : children)
 			child.updatePhysicsAll(engine, delta);

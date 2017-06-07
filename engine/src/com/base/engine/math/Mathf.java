@@ -9,6 +9,7 @@ public class Mathf {
 	}
 	
 	public static final float ROOT_DIFFERENCE = 1e-8f;
+	public static final float PI = (float) Math.PI;
 	
 	//--------------------------------------------------------------------
 	//--------------------------General-----------------------------------
@@ -75,8 +76,8 @@ public class Mathf {
 	 * @return The rounded value
 	 */
 	public static float roundDecimal(float x, int decimalNums){
-		float m = (float) Math.pow(10, decimalNums);
-		return  Math.round(x * m) / m;
+		float m = pow(10, decimalNums);
+		return Math.round(x * m) / m;
 	}
 	public static float roundToMultiplier(float val, float multiplier){
 		return multiplier * Math.round(val / multiplier);
@@ -103,7 +104,7 @@ public class Mathf {
 	 * @return The result for pythagorasTheorem for given values
 	 */
 	public static float pythagorasTheorem(float a, float b, float c){
-		return (float) Math.sqrt((a * a) + (b * b) + (c * c));
+		return sqrt((a * a) + (b * b) + (c * c));
 	}
 	/**
 	 * Gets the result of Pythagorases theorem for a given set of numbers.
@@ -121,7 +122,7 @@ public class Mathf {
 		return pythagorasTheorem(a, b, 0);
 	}
 	public static float reversePythagorasTheorem(float a, float c){
-		return (float) Math.sqrt((c * c) - (a * a));
+		return sqrt((c * c) - (a * a));
 	}
 	public static int multiply(int a, int b){
 		return (a << (b / 2)) + ((b % 2 != 0)? a : 0);
@@ -144,28 +145,28 @@ public class Mathf {
         float x2 = result / exponent;  
         while (Math.abs(x1 - x2) > ROOT_DIFFERENCE){
             x1 = x2;
-            x2 = ((exponent - 1.0f) * x2 + result / (float) Math.pow(x2, exponent - 1.0f)) / exponent;
+            x2 = ((exponent - 1.0f) * x2 + result / pow(x2, exponent - 1.0f)) / exponent;
         }
         return x2;
 	}
 	
 	public static float sineLaw(float a, float ratio){
-		return (float) Math.toDegrees(Math.asin(a / ratio));
+		return toDegrees(asin(a / ratio));
 	}
 	public static float reverseSineLaw(float alpha, float ratio){
-		return ratio * (float) Math.toDegrees(Math.sin(alpha));
+		return ratio * toDegrees(sin(alpha));
 	}
 	public static float cosineLaw(float a, float b, float angle){
-		return ((a * a) + (b * b) - 2 * a * b * (float) Math.toDegrees(Math.cos(angle)));
+		return ((a * a) + (b * b) - 2 * a * b * toDegrees(cos(angle)));
 	}
 	public static float reverseCosineLaw(float a, float b, float c){
-		return (float) Math.acos(-(c * c - a * a - b * b) / (2 * a * b));
+		return acos(-(c * c - a * a - b * b) / (2 * a * b));
 	}
 	public static float discriminant(float a, float b, float c){
 		return (b * b) - 4 * a * c;
 	}
 	public static float[] quadraticFormula(float a, float b, float c){
-		float root = (float) Math.sqrt(discriminant(a, b, c));
+		float root = sqrt(discriminant(a, b, c));
 		return new float[]{(-b + root)/(2 * a), (-b - root)/(2 * a)};
 	}
 	
@@ -174,6 +175,42 @@ public class Mathf {
 		for (int i = 2; i <= n; i++) 
 			result *= n;
 		return result;
+	}
+	
+	public static float cos(float rad){
+		return (float) Math.cos(rad);
+	}
+	public static float sin(float rad){
+		return (float) Math.sin(rad);
+	}
+	public static float tan(float rad){
+		return (float) Math.tan(rad);
+	}
+	public static float acos(float rad){
+		return (float) Math.acos(rad);
+	}
+	public static float asin(float rad){
+		return (float) Math.asin(rad);
+	}
+	public static float atan(float rad){
+		return (float) Math.atan(rad);
+	}
+	public static float atan2(float y, float x){
+		return (float) Math.atan2(y, x);
+	}
+	
+	public static float sqrt(float sq){
+		return (float) Math.sqrt(sq);
+	}
+	public static float pow(float base, float exp){
+		return (float) Math.pow(base, exp);
+	}
+	
+	public static float toRadians(float deg){
+		return deg / 180.0f * PI;
+	}
+	public static float toDegrees(float rad){
+		return rad * 180.0f / PI;
 	}
 	
 	//--------------------------------------------------------------------
@@ -207,28 +244,28 @@ public class Mathf {
 		return multiplyMat(rotationMatrix3dX(x), rotationMatrix3dY(y), rotationMatrix3dZ(z));
 	}
 	public static float[][] rotationMatrix3dX(float angle){
-		angle = (float) Math.toRadians(angle);
+		angle = toRadians(angle);
 		return new float[][]{
 			{1, 0, 0, 0},
-			{0, (float) Math.cos(angle), (float) -Math.sin(angle), 0},
-			{0, (float) Math.sin(angle), (float) Math.cos(angle), 0},
+			{0, cos(angle), (float) -sin(angle), 0},
+			{0, sin(angle), cos(angle), 0},
 			{0,0,0,1}
 		};
 	}
 	public static float[][] rotationMatrix3dY(float angle){
-		angle = (float) Math.toRadians(angle);
+		angle = toRadians(angle);
 		return new float[][]{
-			{(float) Math.cos(angle), 0, (float) Math.sin(angle),0},
+			{cos(angle), 0, sin(angle),0},
 			{0, 1, 0,0},
-			{(float) -Math.sin(angle), 0, (float) Math.cos(angle),0},
+			{-sin(angle), 0, cos(angle),0},
 			{0,0,0,1}
 		};
 	}
 	public static float[][] rotationMatrix3dZ(float angle){
-		angle = (float) Math.toRadians(angle);
+		angle = toRadians(angle);
 		return new float[][]{
-			{(float) Math.cos(angle), (float) -Math.sin(angle), 0,0},
-			{(float) Math.sin(angle), (float) Math.cos(angle), 0,0},
+			{cos(angle), (float) -sin(angle), 0,0},
+			{sin(angle), cos(angle), 0,0},
 			{0,0,1,0},
 			{0,0,0,1}
 		};
@@ -250,8 +287,8 @@ public class Mathf {
 		};
 	}
 	public static float[][] perspectiveMatrix3d(float fov, float aspectRatio, float zNear, float zFar){
-		fov = (float) Math.toRadians(fov);
-		float tanHalfFOV = (float)Math.tan(fov / 2);
+		fov = toRadians(fov);
+		float tanHalfFOV = (float)tan(fov / 2);
 		float zRange = zNear - zFar;
 		
 		return new float[][]{
@@ -360,29 +397,32 @@ public class Mathf {
 	//--------------------------------------------------------------------
 	
 	public static float VecInclination(float z, float magnitude){
-		float angle = (float) Math.toDegrees(Math.acos(z / magnitude)); 
+		float angle = toDegrees(acos(z / magnitude)); 
 		return (z < 0)? -angle : angle;
 	}
 	public static float vecAzimuth(float y, float x){
-		return (float) Math.toDegrees(Math.atan2(y, x));
+		return toDegrees(atan2(y, x));
+	}
+	public static float vecMagnitude(float x, float y){
+		return pythagorasTheorem(x, y);
 	}
 	public static float vecMagnitude(float x, float y, float z){
 		return pythagorasTheorem(x, y, z);
 	}
 	public static float vecX(float magnitude, float azimuth, float inclination){
-		return (float) (magnitude * Math.sin(Math.toRadians(inclination)) * Math.cos(Math.toRadians(azimuth)));
+		return (float) (magnitude * sin(toRadians(inclination)) * cos(toRadians(azimuth)));
 	}
 	public static float vecX(float magnitude, float azimuth){
-		return (float) (magnitude * Math.cos(Math.toRadians(azimuth)));
+		return (float) (magnitude * cos(toRadians(azimuth)));
 	}
 	public static float vecY(float magnitude, float azimuth, float inclination){
-		return (float) (magnitude * Math.sin(Math.toRadians(inclination)) * Math.sin(Math.toRadians(azimuth)));
+		return (float) (magnitude * sin(toRadians(inclination)) * sin(toRadians(azimuth)));
 	}
 	public static float vecY(float magnitude, float azimuth){
-		return (float) (magnitude * Math.sin(Math.toRadians(azimuth)));
+		return (float) (magnitude * sin(toRadians(azimuth)));
 	}
 	public static float vecZ(float magnitude, float inclination){
-		return (float) (magnitude * Math.cos(Math.toRadians(inclination)));
+		return (float) (magnitude * cos(toRadians(inclination)));
 	}
 }
 /*

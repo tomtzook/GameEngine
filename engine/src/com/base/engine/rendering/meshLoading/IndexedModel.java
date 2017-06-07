@@ -60,7 +60,7 @@ public class IndexedModel {
 			//TODO: The first 0.0f may need to be changed to 1.0f here.
 			float f = dividend == 0 ? 0.0f : 1.0f/dividend;
 
-			Vector3f tangent = new Vector3f(0,0,0);
+			Vector3f tangent = new Vector3f();
 			tangent.setX(f * (deltaV2 * edge1.getX() - deltaV1 * edge2.getX()));
 			tangent.setY(f * (deltaV2 * edge1.getY() - deltaV1 * edge2.getY()));
 			tangent.setZ(f * (deltaV2 * edge1.getZ() - deltaV1 * edge2.getZ()));

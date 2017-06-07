@@ -5,7 +5,7 @@ import com.base.engine.math.Quaternion;
 import com.base.engine.math.Vector2f;
 import com.base.engine.rendering.Window;
 
-public class FreeLook extends GameComponent{
+public class FreeLook extends Script{
 
 	private boolean mouseLocked = false;
 	private float sensitivity;
@@ -29,6 +29,8 @@ public class FreeLook extends GameComponent{
 		return sensitivity;
 	}
 	
+	@Override
+	public void init() {}
 	@Override
 	public void input(float delta){
 		if(Input.getKey(unlockMouseKey)){
@@ -56,4 +58,6 @@ public class FreeLook extends GameComponent{
 				Input.setMousePosition(centerPosition);
 		}
 	}
+	@Override
+	public void update(float delta) {}
 }

@@ -19,9 +19,9 @@ public class Quaternion {
 		this.w = w;
 	}
 	public Quaternion(Vector3f axis, float angle){
-		angle =  (float) Math.toRadians(angle);
-		float sinHalfAngle = (float) Math.sin(angle / 2);
-		float cosHalfAngle = (float) Math.cos(angle / 2);
+		angle =  Mathf.toRadians(angle);
+		float sinHalfAngle = Mathf.sin(angle / 2);
+		float cosHalfAngle = Mathf.cos(angle / 2);
 
 		this.x = axis.getX() * sinHalfAngle;
 		this.y = axis.getY() * sinHalfAngle;
@@ -67,7 +67,7 @@ public class Quaternion {
 		w /= length; 	
 	}
 	public float length(){
-		return (float) Math.sqrt(x * x + y * y + z * z + w * w);
+		return Mathf.sqrt(x * x + y * y + z * z + w * w);
 	}
 	public void normalize(){
 		float l = length();
@@ -167,8 +167,8 @@ public class Quaternion {
 		if(Math.abs(cos) >= 1 - EPSILON)
 			return nLerp(correctedDest, lerpFactor, false);
 
-		float sin = (float) Math.sqrt(1.0f - cos * cos);
-		float angle = (float) Math.atan2(sin, cos);
+		float sin = Mathf.sqrt(1.0f - cos * cos);
+		float angle = Mathf.atan2(sin, cos);
 		float invSin =  1.0f/sin;
 
 		float srcFactor = (float) (Math.sin((1.0f - lerpFactor) * angle) * invSin);

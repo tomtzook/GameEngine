@@ -18,9 +18,11 @@ public class Mesh {
 	private static HashMap<String, MeshResource> s_loadedModels = new HashMap<String, MeshResource>();
 	private MeshResource resource;
 	private String fileName;
+	private int drawType;
 	
 	public Mesh(String fileName){
 		this.fileName = fileName;
+		this.drawType = GL_TRIANGLES;
 		MeshResource oldResource = s_loadedModels.get(fileName);
 
 		if(oldResource != null){
@@ -36,7 +38,11 @@ public class Mesh {
 		this(vertices, indices, false);
 	}
 	public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals){
+		this(vertices, indices, calcNormals, GL_TRIANGLES);
+	}
+	public Mesh(Vertex[] vertices, int[] indices, boolean calcNormals, int drawType){
 		fileName = "";
+		this.drawType = drawType;
 		addVertices(vertices, indices, calcNormals);
 	}
 
@@ -74,7 +80,7 @@ public class Mesh {
 		glVertexAttribPointer(3, 3, GL_FLOAT, false, Vertex.SIZE * 4, 32);
 		
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, resource.getIbo());
-		glDrawElements(GL_TRIANGLES, resource.getSize(), GL_UNSIGNED_INT, 0);
+		glDrawElements(drawType, resource.getSize(), GL_UNSIGNED_INT, 0);
 		
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);

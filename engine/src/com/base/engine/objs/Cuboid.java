@@ -1,6 +1,7 @@
-package com.base.engine.core;
+package com.base.engine.objs;
 
 import com.base.engine.components.MeshRenderer;
+import com.base.engine.core.GameObject;
 import com.base.engine.physics.CubicalBody;
 import com.base.engine.physics.Dimensions;
 import com.base.engine.rendering.Material;

@@ -14,10 +14,10 @@ public class Vector2f {
 	}
 	
 	public float length(){
-		return (float) Math.sqrt(x * x + y * y);
+		return Mathf.vecMagnitude(x, y);
 	}
 	public float angle(){
-		return (float) Math.toDegrees(Math.atan2(y, y));
+		return Mathf.vecAzimuth(y, x);
 	}
 	public void normalize(){
 		float l = length();
@@ -147,9 +147,9 @@ public class Vector2f {
 		y = vec.y;
 	}
 	public Vector2f rotate2(float angle){
-		float rad = (float) Math.toRadians(angle);
-		float cos = (float) Math.cos(rad);
-		float sin = (float) Math.sin(rad);
+		float rad = Mathf.toRadians(angle);
+		float cos = Mathf.cos(rad);
+		float sin = Mathf.sin(rad);
 		
 		return new Vector2f((x * cos - y * sin),(x * sin + y * cos));
 	}
@@ -170,7 +170,7 @@ public class Vector2f {
 		return new Vector2f(x, y);
 	}
 	public static float angleBetween(Vector2f u, Vector2f v){
-		return (float) Math.toDegrees(Math.acos(u.dot(v) / (u.length() + v.length())));
+		return Mathf.toDegrees(Mathf.acos(u.dot(v) / (u.length() + v.length())));
 	}
 	public static Vector2f polar(float magnitude, float azimuth){
 		float x = Mathf.vecX(magnitude, azimuth);

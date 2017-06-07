@@ -1,8 +1,9 @@
-package com.base.engine.core;
+package com.base.engine.objs;
 
 import com.base.engine.components.Camera;
 import com.base.engine.components.FreeLook;
 import com.base.engine.components.FreeMove;
+import com.base.engine.core.GameObject;
 import com.base.engine.math.Matf;
 import com.base.engine.rendering.Window;
 

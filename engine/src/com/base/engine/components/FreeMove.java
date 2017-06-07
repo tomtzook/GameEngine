@@ -2,7 +2,7 @@ package com.base.engine.components;
 
 import com.base.engine.core.Input;
 
-public class FreeMove extends GameComponent{
+public class FreeMove extends Script{
 	
 	private float speed;
 	private int forwardKey;
@@ -29,6 +29,8 @@ public class FreeMove extends GameComponent{
 	}
 	
 	@Override
+	public void init() {}
+	@Override
 	public void input(float delta){
 		float movAmt = speed * delta;
 
@@ -41,4 +43,6 @@ public class FreeMove extends GameComponent{
 		if(Input.getKey(rightKey))
 			getTransform().move(getTransform().getRotation().getRight(), movAmt);
 	}
+	@Override
+	public void update(float delta) {}
 }

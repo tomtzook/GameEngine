@@ -19,14 +19,13 @@ public class Vector3f {
 		return Math.max(x, Math.max(y, z));
 	}
 	public float length(){
-		return (float) Math.sqrt(x * x + y * y + z * z);
+		return Mathf.vecMagnitude(x, y, z);
 	}
 	public float inclination(){
-		float angle = (float) Math.toDegrees(Math.acos(z / length())); 
-		return (z < 0)? -angle : angle;
+		return Mathf.VecInclination(z, length());
 	}
 	public float azimuth(){
-		return (float) Math.toDegrees(Math.atan2(y, x));
+		return Mathf.vecAzimuth(y, x);
 	}
 	public void normalize(){
 		float l = length();
@@ -185,8 +184,8 @@ public class Vector3f {
 		return rotate(Quaternion.AXIS_X, rot.x).rotate(Quaternion.AXIS_Y, rot.y).rotate(Quaternion.AXIS_Z, rot.z);
 	}
 	public Vector3f rotate(Vector3f axis, float angle){
-		float sinAngle = (float) Math.sin(-angle);
-		float cosAngle = (float) Math.cos(-angle);
+		float sinAngle = Mathf.sin(-angle);
+		float cosAngle = Mathf.cos(-angle);
 		
 		Vector3f vec = cross(axis.multiply(sinAngle));
 		vec.add(multiply(cosAngle));
@@ -221,7 +220,7 @@ public class Vector3f {
 		return new Vector3f(x, y, z);
 	}
 	public static float angleBetween(Vector3f u, Vector3f v){
-		return (float) Math.toDegrees(Math.acos(u.dot(v) / (u.length() + v.length())));
+		return Mathf.toDegrees(Mathf.acos(u.dot(v) / (u.length() + v.length())));
 	}
 	public static Vector3f polar(float magnitude, float azimuth, float inclination){
 		float x = Mathf.vecX(magnitude, azimuth, inclination);

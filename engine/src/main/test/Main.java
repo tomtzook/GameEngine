@@ -4,13 +4,14 @@ import com.base.engine.components.DirectionalLight;
 import com.base.engine.components.MeshRenderer;
 import com.base.engine.components.PointLight;
 import com.base.engine.components.SpotLight;
-import com.base.engine.core.CameraObject;
 import com.base.engine.core.CoreEngine;
-import com.base.engine.core.Cuboid;
 import com.base.engine.core.Game;
 import com.base.engine.core.GameObject;
 import com.base.engine.math.Quaternion;
 import com.base.engine.math.Vector3f;
+import com.base.engine.objs.CameraObject;
+import com.base.engine.objs.Cuboid;
+import com.base.engine.objs.Sphere;
 import com.base.engine.rendering.Attenuation;
 import com.base.engine.rendering.Material;
 import com.base.engine.rendering.Mesh;
@@ -48,11 +49,15 @@ public class Main extends Game{
 		spotLightObject.getTransform().getPosition().set(5.0f, 0.0f, 5.0f);
 		spotLightObject.getTransform().rotate(Quaternion.AXIS_Y, 90.0f);
 		
-		Cuboid cuboid = new Cuboid(2.0f, 2.0f, 2.0f, 50.0f, bodyMaterial);
+		Cuboid cuboid = new Cuboid(2.0f, 2.0f, 2.0f, 20.0f, bodyMaterial);
 		cuboid.applyForce(new Vector3f(10.0f, 0.0f, 0.0f), 
 				          cuboid.getPhysicsObject().getCenter(), 
 						  1.0f);
+		Sphere sphere = new Sphere(2.0f, 20.0f, bodyMaterial);
+		sphere.getTransform().getPosition().set(3.0f, 2.0f, 4.0f);
+		
 		addObject(cuboid);
+		addObject(sphere);
 		addObject(planeObject);
 		//addObject(directionalLightObject);
 		//addObject(pointLightObject);

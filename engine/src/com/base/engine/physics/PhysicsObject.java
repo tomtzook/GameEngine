@@ -71,11 +71,10 @@ public abstract class PhysicsObject {
 		Vector3f netTorque = new Vector3f();
 		Vector3f netForce = new Vector3f();
 		
-		Vector3f torque = null;
 		for (int i = forces.size() - 1; i >= 0; i--) {
 			AppliedForce forceObj = forces.get(i);
-			torque = Physics.torque(forceObj.getPosition(), forceObj.getForce());
-			netTorque.addSelf(torque);
+			netTorque.addSelf(Physics.torque(forceObj.getPosition(), 
+					forceObj.getForce()));
 			netForce.addSelf(forceObj.getForce());
 			
 			float time = forceObj.getTime() - delta;
