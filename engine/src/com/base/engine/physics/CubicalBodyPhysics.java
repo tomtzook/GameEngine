@@ -2,12 +2,12 @@ package com.base.engine.physics;
 
 import com.base.engine.math.Vector3f;
 
-public class CubicalBody extends PhysicsObject{
+public class CubicalBodyPhysics extends DynamicPhysicsObject{
 
-	public CubicalBody(Dimensions.Cuboid dimensions) {
+	public CubicalBodyPhysics(Dimensions.Cuboid dimensions) {
 		super(dimensions);
 	}
-	public CubicalBody(float length, float width, float height, float mass) {
+	public CubicalBodyPhysics(float length, float width, float height, float mass) {
 		super(new Dimensions.Cuboid(length, width, height, mass));
 	}
 	

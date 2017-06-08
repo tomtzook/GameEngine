@@ -1,5 +1,7 @@
 package com.base.engine.core;
 
+import java.util.ArrayList;
+
 import com.base.engine.physics.PhysicsEngine;
 import com.base.engine.rendering.RenderingEngine;
 
@@ -33,6 +35,9 @@ public abstract class Game {
 	
 	public void setEngine(CoreEngine engine) {
 		getRootObject().setEngine(engine); 
+	}
+	public ArrayList<GameObject> getAllObjects(){
+		return getRootObject().getAllAttached();
 	}
 	
 	protected void init(){}

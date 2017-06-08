@@ -139,8 +139,7 @@ public class OBJModel {
 		return result;
 	}
 
-	private OBJIndex parseOBJIndex(String token)
-	{
+	private OBJIndex parseOBJIndex(String token){
 		String[] values = token.split("/");
 
 		OBJIndex result = new OBJIndex();

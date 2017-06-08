@@ -2,12 +2,12 @@ package com.base.engine.physics;
 
 import com.base.engine.math.Vector3f;
 
-public class SphericalBody extends PhysicsObject{
+public class SphericalBodyPhysics extends DynamicPhysicsObject{
 
-	public SphericalBody(Dimensions.Sphere dimensions) {
+	public SphericalBodyPhysics(Dimensions.Sphere dimensions) {
 		super(dimensions);
 	}
-	public SphericalBody(float radius, float mass) {
+	public SphericalBodyPhysics(float radius, float mass) {
 		super(new Dimensions.Sphere(radius, mass));
 	}
 

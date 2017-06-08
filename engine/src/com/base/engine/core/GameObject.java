@@ -65,45 +65,43 @@ public class GameObject {
 	public void inputAll(float delta){
 		input(delta);
 
-		for(GameObject child : children)
-			child.inputAll(delta);
+		for(int i = 0; i < children.size(); i++)
+			children.get(i).inputAll(delta);
 	}
 
 	public void updateAll(float delta){
 		update(delta);
 
-		for(GameObject child : children)
-			child.updateAll(delta);
+		for(int i = 0; i < children.size(); i++)
+			children.get(i).updateAll(delta);
 	}
 	public void updatePhysicsAll(PhysicsEngine engine, float delta){
-		if(physicsObject != null){
-			physicsObject.update(engine, delta);
-			engine.updateObject(this, delta);
-		}
+		if(physicsObject != null)
+			engine.updateObject(physicsObject, delta);
 		
-		for(GameObject child : children)
-			child.updatePhysicsAll(engine, delta);
+		for(int i = 0; i < children.size(); i++)
+			children.get(i).updatePhysicsAll(engine, delta);
 	}
 	public void renderAll(Shader shader, RenderingEngine renderingEngine){
 		render(shader, renderingEngine);
 
-		for(GameObject child : children)
-			child.renderAll(shader, renderingEngine);
+		for(int i = 0; i < children.size(); i++)
+			children.get(i).renderAll(shader, renderingEngine);
 	}
 
 	public void input(float delta){
 		transform.update();
 
-		for(GameComponent component : components)
-			component.input(delta);
+		for(int i = 0; i < components.size(); i++)
+			components.get(i).input(delta);
 	}
 	public void update(float delta){
-		for(GameComponent component : components)
-			component.update(delta);
+		for(int i = 0; i < components.size(); i++)
+			components.get(i).update(delta);
 	}
 	public void render(Shader shader, RenderingEngine renderingEngine){
-		for(GameComponent component : components)
-			component.render(shader, renderingEngine);
+		for(int i = 0; i < components.size(); i++)
+			components.get(i).render(shader, renderingEngine);
 	}
 	
 	public Transform getTransform(){
@@ -112,10 +110,16 @@ public class GameObject {
 	public ArrayList<GameObject> getAllAttached(){
 		ArrayList<GameObject> result = new ArrayList<GameObject>();
 
-		for(GameObject child : children)
-			result.addAll(child.getAllAttached());
+		for(int i = 0; i < children.size(); i++)
+			result.addAll(children.get(i).getAllAttached());
 
-		result.add(this);
+		return result;
+	}
+	public ArrayList<GameComponent> getAllComponents(){
+		ArrayList<GameComponent> result = new ArrayList<GameComponent>();
+		for (int i = 0; i < components.size(); i++)
+			result.add(components.get(i));
+		
 		return result;
 	}
 	

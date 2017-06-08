@@ -7,14 +7,23 @@ import static org.lwjgl.opengl.GL20.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.lwjgl.opengl.GL11;
+
 import com.base.engine.core.Util;
+import com.base.engine.math.Mathf;
+import com.base.engine.math.Vector2f;
 import com.base.engine.math.Vector3f;
+import com.base.engine.physics.CubicalBodyPhysics;
+import com.base.engine.physics.SphericalBodyPhysics;
 import com.base.engine.rendering.meshLoading.IndexedModel;
 import com.base.engine.rendering.meshLoading.OBJModel;
 import com.base.engine.rendering.resourceManagement.MeshResource;
 
 public class Mesh {
 
+	public static final int DEFUALT_SPHERE_MESH_SLICES = 20;
+	public static final int DEFUALT_SPHERE_MESH_STACKS = 20;
+	
 	private static HashMap<String, MeshResource> s_loadedModels = new HashMap<String, MeshResource>();
 	private MeshResource resource;
 	private String fileName;
@@ -139,5 +148,80 @@ public class Mesh {
 		addVertices(vertexData, Util.toIntArray(indexData), false);
 		
 		return this;
+	}
+	
+	public static Mesh createSphereMesh(Vector3f center, float radius, int slices, int stacks){
+		ArrayList<Vertex> vertecies = new ArrayList<Vertex>();
+		ArrayList<Integer> indices = new ArrayList<Integer>();
+		
+		float PI = Mathf.PI;
+		float rho, drho = PI / stacks, theta, dtheta = 2.0f * PI / slices;
+		float x, y, z;
+		float s, t = 1.0f, ds = 1.0f / slices, dt = 1.0f / stacks;
+		int i, j, imin = 0, imax = stacks;
+		float nsign = 1.0f;
+		
+		for (i = imin; i < imax; i++) {
+			rho = i * drho;
+			s = 0.0f;
+			for (j = 0; j <= slices; j++) {
+				theta = (j == slices) ? 0.0f : j * dtheta;
+				x = center.getX() + (-Mathf.sin(theta) * Mathf.sin(rho));
+				y = center.getY() + (Mathf.cos(theta) * Mathf.sin(rho));
+				z = center.getZ() + (nsign * Mathf.cos(rho));
+				vertecies.add(new Vertex(
+						new Vector3f(x * radius, y * radius, z * radius),
+						new Vector2f(s, t)));
+				indices.add(vertecies.size()-1);
+				
+				x = center.getX() + (-Mathf.sin(theta) * Mathf.sin(rho + drho));
+				y = center.getY() + (Mathf.cos(theta) * Mathf.sin(rho + drho));
+				z = center.getZ() + (nsign * Mathf.cos(rho + drho));
+				s += ds;
+				vertecies.add(new Vertex(
+						new Vector3f(x * radius, y * radius, z * radius),
+						new Vector2f(s, t - dt)));
+				indices.add(vertecies.size()-1);
+			}
+			t -= dt;
+		}
+		
+		return new Mesh(vertecies.toArray(new Vertex[0]),
+				Util.toIntArray(indices.toArray(new Integer[0])), 
+				true, GL11.GL_QUAD_STRIP);
+	}
+	public static Mesh createCubeMesh(Vector3f... vec){
+		Vertex fbr = new Vertex(vec[0]),//body.getForwardBottomRight()), 
+			   ftr = new Vertex(vec[1]),//body.getForwardTopRight()),
+			   fbl = new Vertex(vec[2]),//body.getForwardBottomLeft()),  
+			   ftl = new Vertex(vec[3]),//body.getForwardTopLeft()),
+			   bbr = new Vertex(vec[4]),//body.getBackBottomRight()),    
+			   btr = new Vertex(vec[5]),//body.getBackTopRight()),
+			   bbl = new Vertex(vec[6]),//body.getBackBottomLeft()),     
+			   btl = new Vertex(vec[7]);//body.getBackTopLeft());
+		Vertex[] vertices = {//front, back, top, bottom, right, left
+			ftl/*0*/, fbl/*1*/, fbr/*2*/, ftr/*3*/,
+			btl/*4*/, bbl/*5*/, bbr/*6*/, btr/*7*/,
+		};
+		int[] indices = {
+			0, 1, 2,//front
+			2, 3, 0,
+			
+			4, 7, 6,//back
+			6, 5, 4,
+			
+			0, 3, 7,//top
+			7, 4, 0,
+			
+			1, 5, 6,//bottom
+			6, 2, 1,
+			
+			3, 2, 6,//right
+			6, 7, 3,
+			
+			1, 0, 4,//left
+			4, 5, 1
+		};
+		return new Mesh(vertices, indices);
 	}
 }
